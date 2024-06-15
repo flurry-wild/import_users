@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Events\ParseUsersReport;
 use App\Imports\UsersImport;
 use App\Services\UsersImportService;
 use Illuminate\Bus\Queueable;
@@ -52,7 +53,9 @@ class ParseUsers implements ShouldQueue
             $jobIds = $service->getProp($uploadId, 'jobs');
             $service->setProp($uploadId, 'jobs', implode(',', array_merge(explode(',', $jobIds), [$this->job->getJobId()])));
 
-            //static::dispatch();
+            broadcast(new ParseUsersReport(round($lastProcessedRow/$totalRowsCount, 2) * 100));
+
+            static::dispatch();
         }
     }
 }

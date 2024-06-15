@@ -4,6 +4,7 @@
     <div class="m-4">
         <p>ID загрузки: <b>{{ this.info.current_upload_id }}</b></p>
         <p>Количество загруженных строк из файла: <b>{{ this.info.last_processed_row }}</b></p>
+        <p>Выполнено {{ percentExec }} %</p>
     </div>
 
 <!--    <div class="progress">
@@ -19,12 +20,20 @@ export default {
     data() {
         return {
             progress: 0,
-            info: {}
+            info: {},
+            percentExec: 0
         };
     },
     mounted() {
         this.getInfo();
         this.progress = 50;
+
+        Echo.private('import')
+            .listen('ParseUsersReport', (e) => {
+                console.log(e);
+
+                this.percentExec = e.percentExec;
+            });
     },
     methods: {
         getInfo() {
@@ -33,9 +42,7 @@ export default {
             })
         },
         startImport() {
-            axios.get('/api/import').then(res => {
-                console.log(res);
-            });
+            axios.get('/api/import');
         }
     }
 }
