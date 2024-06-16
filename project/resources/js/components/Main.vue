@@ -7,9 +7,8 @@
         <p>Выполнено {{ this.info.percent_exec }} %</p>
     </div>
 
-<!--    <div class="progress">
-        <div class="progress-bar" :style="{ width: progress + '%' }" ref="progressBar"></div>
-    </div>-->
+    <ProgressBar :value="this.info.percent_exec"></ProgressBar>
+
 </template>
 <script>
 import axios from 'axios';
@@ -26,7 +25,6 @@ export default {
     },
     mounted() {
         this.getInfo();
-        this.progress = 50;
 
         Echo.private('import')
             .listen('ParseUsersReport', (e) => {
@@ -47,16 +45,3 @@ export default {
     }
 }
 </script>
-<style>
-.progress {
-    width: 100%;
-    height: 20px;
-    background-color: #f0f0f0;
-}
-
-.progress-bar {
-    height: 100%;
-    background-color: #007bff;
-    transition: width 0.5s; /* Добавляем анимацию перехода */
-}
-</style>

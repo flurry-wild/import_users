@@ -8,6 +8,7 @@ import router from './router';
 import PrimeVue from 'primevue/config';
 import Button from 'primevue/button';
 import InputText from 'primevue/inputtext';
+import ProgressBar from 'primevue/progressbar';
 
 import 'bootstrap';
 import 'primevue/resources/themes/saga-blue/theme.css';
@@ -24,6 +25,7 @@ const app = createApp({
 
 app.component('Button', Button);
 app.component('InputText', InputText);
+app.component('ProgressBar', ProgressBar);
 
 app.use(router);
 app.use(PrimeVue);
