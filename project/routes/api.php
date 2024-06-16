@@ -20,6 +20,6 @@ Route::middleware(['auth:sanctum'])->get('/user', function (Request $request) {
 });
 
 Route::group(['middleware' => 'auth:sanctum'], function () {
-    Route::get('/current-upload/info', [\App\Http\Controllers\XlsxController::class, 'info']);
+    Route::get('/current-upload/info', [XlsxController::class, 'info']);
     Route::get('/import', [XlsxController::class, 'createImportJob']);
 });

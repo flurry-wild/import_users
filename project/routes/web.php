@@ -14,8 +14,6 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/import', [\App\Http\Controllers\XlsxController::class, 'createImportJob']);
-
 Route::get('/{any}', [MainController::class, 'vue'])->where('any', '.*');
 
 require __DIR__.'/auth.php';
