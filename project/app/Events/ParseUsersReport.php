@@ -15,7 +15,7 @@ class ParseUsersReport implements ShouldBroadcastNow
     /**
      * Create a new event instance.
      */
-    public function __construct(public float $percentExec) {}
+    public function __construct(public array $info) {}
 
     /**
      * Get the channels the event should broadcast on.

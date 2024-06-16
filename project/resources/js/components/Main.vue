@@ -4,7 +4,7 @@
     <div class="m-4">
         <p>ID загрузки: <b>{{ this.info.current_upload_id }}</b></p>
         <p>Количество загруженных строк из файла: <b>{{ this.info.last_processed_row }}</b></p>
-        <p>Выполнено {{ percentExec }} %</p>
+        <p>Выполнено {{ this.info.percent_exec }} %</p>
     </div>
 
 <!--    <div class="progress">
@@ -32,7 +32,7 @@ export default {
             .listen('ParseUsersReport', (e) => {
                 console.log(e);
 
-                this.percentExec = e.percentExec;
+                this.info = e.info;
             });
     },
     methods: {
