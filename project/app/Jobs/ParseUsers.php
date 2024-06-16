@@ -23,11 +23,10 @@ class ParseUsers implements ShouldQueue
     {
         $uploadId = $service->getUploadId();
 
-        if (empty($uploadId)) {
-            $service->createNewUpload(1, $this->job->getJobId());
+        if ($uploadId === 0) {
+            $uploadId = $uploadId + 1;
+            $service->createNewUpload($uploadId, $this->job->getJobId());
         }
-
-        $uploadId = $service->getUploadId();
 
         $status = $service->getProp($uploadId, 'status');
 
@@ -37,10 +36,9 @@ class ParseUsers implements ShouldQueue
 
         $lastProcessedRow = (int)$service->getProp($uploadId, 'last_processed_row');
 
-        $totalRows = Excel::toArray(new UsersImport, storage_path('app/public/import.xlsx'));
-        $totalRowsCount = count($totalRows[0]);
+        $totalRows = $service->getAndSetTotalRows($uploadId);
 
-        if ($lastProcessedRow + 1 >= $totalRowsCount) {
+        if ($lastProcessedRow + 1 >= $totalRows) {
             $service->setProp($uploadId, 'status', 'finished');
         } else {
             $import = new UsersImport();
@@ -53,9 +51,12 @@ class ParseUsers implements ShouldQueue
             $jobIds = $service->getProp($uploadId, 'jobs');
             $service->setProp($uploadId, 'jobs', implode(',', array_merge(explode(',', $jobIds), [$this->job->getJobId()])));
 
-            broadcast(new ParseUsersReport(round($lastProcessedRow/$totalRowsCount, 2) * 100));
+
+            broadcast(new ParseUsersReport($service->info()));
 
             static::dispatch();
         }
     }
+
+
 }
