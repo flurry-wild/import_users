@@ -1,5 +1,5 @@
 <template>
-    <Button label="Запустить импорт" @click="startImport"></Button>
+    <Button label="Запустить импорт" @click="startImport" :disabled="this.info.start_import_button_disabled"></Button>
 
     <div class="m-4">
         <p v-if="this.info.current_upload_id">ID загрузки: <b>{{ this.info.current_upload_id }}</b></p>
@@ -20,7 +20,9 @@ export default {
 
     data() {
         return {
-            info: {},
+            info: {
+                'start_import_button_disabled': false
+            },
         };
     },
     mounted() {
@@ -38,8 +40,9 @@ export default {
             })
         },
         startImport() {
-            axios.get('/api/import');
-            this.info.percent_exec = 0;
+            axios.get('/api/import').then(res => {
+                this.info.start_import_button_disabled = true;
+            });
         }
     }
 }

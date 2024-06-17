@@ -36,7 +36,7 @@ class UsersImportService
         Redis::hset('excel_file_upload_'.$uploadId, $key, $value);
     }
 
-    public function getPercent($uploadId, $totalRowsCount)
+    public function getPercent($uploadId, $totalRowsCount): float
     {
         if (empty($totalRowsCount)) {
             return 0;
@@ -62,7 +62,7 @@ class UsersImportService
         return (int)$this->getProp($uploadId, 'total_rows');
     }
 
-    public function info()
+    public function info(): array
     {
         $uploadId = $this->getUploadId();
 
@@ -74,6 +74,14 @@ class UsersImportService
             'current_upload_id' => $uploadId,
             'last_processed_row' => (int)$this->getProp($uploadId, 'last_processed_row'),
             'percent_exec' => $this->getPercent($uploadId, $this->getProp($uploadId, 'total_rows')),
+            'start_import_button_disabled' => $this->queueAtWork()
         ];
+    }
+
+    public function queueAtWork()
+    {
+        $queueLength = Redis::connection()->llen('queues:default');
+
+        return $queueLength !== 0;
     }
 }
