@@ -2,12 +2,14 @@
     <Button label="Запустить импорт" @click="startImport"></Button>
 
     <div class="m-4">
-        <p>ID загрузки: <b>{{ this.info.current_upload_id }}</b></p>
-        <p>Количество загруженных строк из файла: <b>{{ this.info.last_processed_row }}</b></p>
-        <p>Выполнено {{ this.info.percent_exec }} %</p>
+        <p v-if="this.info.current_upload_id">ID загрузки: <b>{{ this.info.current_upload_id }}</b></p>
+        <p v-if="this.info.last_processed_row">
+            Количество загруженных строк из файла: <b>{{ this.info.last_processed_row }}</b>
+        </p>
+        <p v-if="this.info.percent_exec">Выполнено {{ this.info.percent_exec }} %</p>
     </div>
 
-    <ProgressBar :value="this.info.percent_exec"></ProgressBar>
+    <ProgressBar :value="this.info.percent_exec" v-if="this.info.percent_exec"></ProgressBar>
 
 </template>
 <script>
@@ -18,9 +20,7 @@ export default {
 
     data() {
         return {
-            progress: 0,
             info: {},
-            percentExec: 0
         };
     },
     mounted() {
@@ -28,8 +28,6 @@ export default {
 
         Echo.private('import')
             .listen('ParseUsersReport', (e) => {
-                console.log(e);
-
                 this.info = e.info;
             });
     },
@@ -41,6 +39,7 @@ export default {
         },
         startImport() {
             axios.get('/api/import');
+            this.info.percent_exec = 0;
         }
     }
 }
