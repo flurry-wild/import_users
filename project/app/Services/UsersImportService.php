@@ -21,7 +21,7 @@ class UsersImportService
         $this->setProp($uploadId, 'last_processed_row', 0);
         $this->setProp($uploadId, 'total_rows', 0);
 
-        $jobIds = $this->getProp($uploadId,'jobs') ?? [];
+        $jobIds = $this->getProp($uploadId,'jobs') ?? '';
 
         $this->setProp($uploadId, 'jobs', implode(',', array_merge(explode(',', $jobIds), [$jobId])));
     }
@@ -38,6 +38,10 @@ class UsersImportService
 
     public function getPercent($uploadId, $totalRowsCount)
     {
+        if (empty($totalRowsCount)) {
+            return 0;
+        }
+
         $lastProcessedRow = (int)$this->getProp($uploadId, 'last_processed_row');
 
         return round($lastProcessedRow/$totalRowsCount * 100, 2);
@@ -61,6 +65,10 @@ class UsersImportService
     public function info()
     {
         $uploadId = $this->getUploadId();
+
+        if (empty($uploadId)) {
+            return [];
+        }
 
         return [
             'current_upload_id' => $uploadId,
