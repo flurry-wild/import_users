@@ -4,12 +4,13 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateImportedUsersTable extends Migration
+class CreateRowsTable extends Migration
 {
     public function up()
     {
-        Schema::create('imported_users', function (Blueprint $table) {
+        Schema::create('rows', function (Blueprint $table) {
             $table->id();
+            $table->unsignedBigInteger('external_id')->unique();
             $table->string('name');
             $table->date('date');
             $table->timestamps();
@@ -18,6 +19,6 @@ class CreateImportedUsersTable extends Migration
 
     public function down()
     {
-        Schema::dropIfExists('imported_users');
+        Schema::dropIfExists('rows');
     }
 }
