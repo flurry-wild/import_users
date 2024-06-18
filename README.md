@@ -12,3 +12,9 @@
 
 Войти в панель можно с этим доступом:
 <img src="screenshots/screen4.png">
+
+Нажать кнопку "Запустить импорт". Далее можно либо вручную запускать очередь в отдельном окне:
+<pre>docker exec excel-jobs-app bash -c "php artisan schedule:run"</pre>
+Либо прописать через
+<pre>sudo crontab -e</pre>
+<pre>* * * * * docker exec excel-jobs-app bash -c "php artisan schedule:run"</pre>
