@@ -2,7 +2,7 @@
     <div class="container">
         <div class="col-md-6">
             <InputText v-model="email" type="email" placeholder="email" class="m-2"/>
-            <InputText v-model="password" type="password" placeholder="password" class="m-2"/>
+            <InputText v-model="password" type="password" placeholder="пароль" class="m-2"/>
             <Button @click.prevent="login" label="Войти" class="m-2"></Button>
         </div>
     </div>

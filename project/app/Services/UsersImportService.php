@@ -78,7 +78,7 @@ class UsersImportService
         ];
     }
 
-    public function queueAtWork()
+    public function queueAtWork(): bool
     {
         $queueLength = Redis::connection()->llen('queues:default');
 
