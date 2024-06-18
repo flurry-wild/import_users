@@ -4,3 +4,9 @@
 <img src="screenshots/screen1.png">
 <img src="screenshots/screen2.png">
 <img src="screenshots/screen3.png">
+
+Как поднять на linux:
+Клонировать репозиторий, в папке прописать <pre>make install</pre>
+
+Войти в панель можно с этим доступом:
+<img src="screenshots/screen4.png">
