@@ -9,6 +9,8 @@
 Клонировать репозиторий, в папке прописать <pre>make install</pre>
 
 <img src="screenshots/screen5.png">
+<br>
+<br>
 
 Войти в панель можно с этим доступом:
 <img src="screenshots/screen4.png">
