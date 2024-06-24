@@ -21,15 +21,18 @@ export default {
             isLoggedIn: false
         };
     },
-    mounted() {
-        this.isLoggedIn = AuthMixin.methods.checkAuthStatus();
+    watch:{
+        $route (to, from) {
+            this.isLoggedIn = AuthMixin.methods.checkAuthStatus();
+            console.log(this.isLoggedIn);
+        }
     },
     methods: {
         logout() {
             axios.post('/logout').then(res => {
                 localStorage.removeItem('x_xsrf_token');
 
-                window.location.href = '/#/login';
+                this.$router.push({name:'login'});
             })
         }
     }

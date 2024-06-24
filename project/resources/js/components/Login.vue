@@ -28,7 +28,7 @@ export default {
                         localStorage.setItem('x_xsrf_token', this.getCookie('XSRF-TOKEN'));
                     }
 
-                    window.location.href = '/';
+                    this.$router.push({name:'main'});
                 });
             });
         },
