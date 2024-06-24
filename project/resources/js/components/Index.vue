@@ -29,7 +29,7 @@ export default {
             axios.post('/logout').then(res => {
                 localStorage.removeItem('x_xsrf_token');
 
-                window.location.href = '/login';
+                window.location.href = '/#/login';
             })
         }
     }

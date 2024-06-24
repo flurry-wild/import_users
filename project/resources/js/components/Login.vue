@@ -21,10 +21,12 @@ export default {
     methods: {
         login() {
             axios.get('/sanctum/csrf-cookie').then(response => {
-                console.log(response);
+                //console.log(response);
 
                 axios.post('/login', { email: this.email, password: this.password }).then(r => {
-                    localStorage.setItem('x_xsrf_token', this.getCookie('XSRF-TOKEN'));
+                    if (r.status === 204) {
+                        localStorage.setItem('x_xsrf_token', this.getCookie('XSRF-TOKEN'));
+                    }
 
                     window.location.href = '/';
                 });
